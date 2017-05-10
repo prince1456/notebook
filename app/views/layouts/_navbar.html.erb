@@ -1,0 +1,13 @@
+<%= nav_bar fixed: :top, brand: "Notebook", responsive: true do %>
+    <%= menu_group do %>
+        <%= menu_item "Home", root_path %>
+        <%= menu_divider %>
+        <%#= drop_down "Products" do %>
+            <%#= menu_item "Things you can't afford", expensive_products_path %>
+            <%# if current_user.lives_in_hackney? %>
+            <%#= menu_item "Bikes", fixed_wheel_bikes_path %>
+            <%# end %>
+        <%# end %>
+    <% end %>
+
+<% end %>

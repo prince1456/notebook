@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Notebook</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="row">
+        <%#= render "layouts/navbar" %>
+         <div class="col-md-1 sidebar ">
+            <ul>
+
+
+
+              <li><a href="#newnote" data-toggle="modal"><span class="glyphicon glyphicon-plus" aria-hidden= "true"></span></a></li>
+              <li><a href="#search" data-toggle="modal"><span class="glyphicon glyphicon-search" aria-hidden= "true"></span></a></li>
+              <li></li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <h3> Notes </h3>
+            <div class="row">
+                <div class="col-md-5"><%= @notes.count %></div>
+                <div class="col-md-7">filter</div>
+            </div>
+        <hr>
+          <div class="row ">
+              <% @notes.each do |note| %>
+                  <strong id="<%= note.id %>"><%= link_to note.title, edit_note_path(note) %></a></strong>
+                  <br>
+                  <%= note.created_at %>
+                  <br>
+                  <%= truncate(note.body, length: 100) %>
+                  <hr>
+              <% end %>
+          </div>
+        </div>
+        <div class="col-md-8">
+            <%= yield %>
+        </div>
+    </div>
+    <!-- Modal start here -->
+            <div class="modal fade modal-fullscreen" id="newnote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+              <div class="modal-body">
+                <%= render 'notes/form' %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal search here -->
+               <div class="modal fade modal-fullscreen" id="search" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+             <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                 <div class="modal-body">
+                   <%= form_tag(notes_path, :method => "get", id: "search-form") do %>
+                       <%= text_field_tag :search, params[:search], placeholder: "Search notes" %>
+                       <%= submit_tag "Search", :name => nil %>
+                    <% end %>
+                 </div>
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-primary">Save changes</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+
+
+  </body>
+</html>
